@@ -52,5 +52,18 @@ class StandardStudent
       setter = "#{key}="
       send(setter, value) if respond_to?(setter.to_sym, false)
     end
+    # Note: In practice, there should be a method in place of `true` to check for negative-like values in the input,
+    # e.g. 'N', '', 'No', 0.  I have not implemented that here as it did not map to a field in the input file, and it
+    # was unclear what it might mean
+    self.is_pp = options.keys.include?(:is_pp) ? true : false
+    set_default_values
+  end
+
+  private
+
+  def set_default_values
+    self.year_group_source_id ||= '2018-1718'
+    self.country_of_birth     ||= 'GBR'
+    self.nationalities        ||= 'GBR'
   end
 end
