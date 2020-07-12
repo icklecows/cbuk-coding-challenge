@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require_relative '../lib/input_student'
+require_relative '../../lib/input_student'
 
 class InputStudentTest < Minitest::Test
   def test_new

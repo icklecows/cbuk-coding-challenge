@@ -1,1 +1,5 @@
 .rubocop.yml
+/task/tmp/*
+/task/test/tmp/*
+!/task/tmp/.keep
+!/task/test/tmp/.keep

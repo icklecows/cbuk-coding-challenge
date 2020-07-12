@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require_relative '../lib/standard_student'
+require_relative '../../lib/standard_student'
 
 class StandardStudentTest < Minitest::Test
   def test_new

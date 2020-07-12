@@ -89,12 +89,12 @@ class InputStudent < StandardStudent
   def process_address_details(input_data)
     input_data = input_data.first
     first_line = make_address_first_line(input_data['Flat'], input_data['Number'], input_data['Street'])
-    { address_line_1: first_line,
-      address_line_2: input_data['Locality'],
-      town_city:      input_data['Town'],
-      county:         input_data['County'],
-      country:        input_data['Country'],
-      postcode:       input_data['PostCode'] }
+    { 'address_line_1' => first_line,
+      'address_line_2' => input_data['Locality'],
+      'town_city'      => input_data['Town'],
+      'county'         => input_data['County'],
+      'country'        => input_data['Country'],
+      'postcode'       => input_data['PostCode'] }
   end
 
   def process_first_language_code(input_data)
