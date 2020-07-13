@@ -1,7 +1,11 @@
-require 'active_support/all'
+# frozen_string_literal: true
+
+require 'active_support/core_ext/object/blank'
 require_relative 'modules/text_processor'
 require_relative 'standard_student'
 
+# Creates a standard student from the supplied input file.  In practice this would be more helpfully named for the MIS
+# that is the data source.
 class InputStudent < StandardStudent
   include TextProcessor
 
@@ -42,9 +46,9 @@ class InputStudent < StandardStudent
   def standardise(options)
     standard_data = {}
     options.each do |key, value|
-      standard_data[output_code(key)] = output_data(output_code(key), value)
+      standard_data[output_code(key).to_sym] = output_data(output_code(key), value)
     end
-    standard_data = standard_data.merge(standard_data['address_details']) if standard_data['address_details'].present?
+    standard_data = standard_data.merge(standard_data[:address_details]) if standard_data[:address_details].present?
     standard_data
   end
 
@@ -88,20 +92,20 @@ class InputStudent < StandardStudent
 
   def process_address_details(input_data)
     input_data = input_data.first
-    first_line = make_address_first_line(input_data['Flat'], input_data['Number'], input_data['Street'])
-    { 'address_line_1' => first_line,
-      'address_line_2' => input_data['Locality'],
-      'town_city'      => input_data['Town'],
-      'county'         => input_data['County'],
-      'country'        => input_data['Country'],
-      'postcode'       => input_data['PostCode'] }
+    first_line = address_first_line(input_data['Flat'], input_data['Number'], input_data['Street'])
+    { address_line_1: first_line,
+      address_line_2: input_data['Locality'],
+      town_city:      input_data['Town'],
+      county:         input_data['County'],
+      country:        input_data['Country'],
+      postcode:       input_data['PostCode'] }
   end
 
   def process_first_language_code(input_data)
     input_data.first['LanguageCode']
   end
 
-  def make_address_first_line(flat, number, street)
+  def address_first_line(flat, number, street)
     "#{'Flat ' + flat + ' ' if flat.present?}#{number} #{street}"
   end
 end

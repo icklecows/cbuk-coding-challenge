@@ -1,7 +1,21 @@
+# frozen_string_literal: true
+
 require 'minitest/autorun'
 require_relative '../../lib/input_student'
 
+# Tests the InputStudent class to make sure that field names are mapped and value processing is accurate
 class InputStudentTest < Minitest::Test
+  EXAMPLE_ADDRESS_DATA = [{ 'Country'   => 'GBR',
+                            'Type'      => 'H',
+                            'Flat'      => '',
+                            'Number'    => '268',
+                            'Street'    => 'Coronation Street',
+                            'Locality'  => '',
+                            'Town'      => 'Derby',
+                            'County'    => '',
+                            'PostCode'  => 'DE3 3FE',
+                            'AddressId' => 1211 }].freeze
+
   def test_new
     assert InputStudent.new.is_a? StandardStudent
   end
@@ -40,16 +54,7 @@ class InputStudentTest < Minitest::Test
   end
 
   def test_process_address_details
-    student = InputStudent.new('AddressDetails' => [{ 'Country'   => 'GBR',
-                                                      'Type'      => 'H',
-                                                      'Flat'      => '',
-                                                      'Number'    => '268',
-                                                      'Street'    => 'Coronation Street',
-                                                      'Locality'  => '',
-                                                      'Town'      => 'Derby',
-                                                      'County'    => '',
-                                                      'PostCode'  => 'DE3 3FE',
-                                                      'AddressId' => 1211 }])
+    student = InputStudent.new('AddressDetails' => EXAMPLE_ADDRESS_DATA)
     assert_equal '268 Coronation Street', student.address_line_1
     refute student.respond_to? :address_details
   end

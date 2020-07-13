@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require 'optparse'
-require 'json'
+require 'active_support/core_ext/object/json'
 require_relative 'lib/input_student'
 require_relative 'lib/standard_student'
+require_relative 'test/test'
 
 @options = {}
 
@@ -14,14 +17,19 @@ OptionParser.new do |opts|
     @options[:output_path] = path
   end
 
+  opts.on('-t', '--test', 'Run test suite') do
+    Test.run_test_suite
+    exit
+  end
+
   opts.on('-h', '--help', 'Prints this help') do
     puts opts
     exit
   end
 end.parse!
 
-input_path = @options[:input_path] || File.join(File.dirname(__FILE__), 'input_mis_data.json')
-output_path = @options[:output_path] || File.join(File.dirname(__FILE__), 'tmp/output_mis_data.json')
+input_path = @options[:input_path] || File.join(Dir.pwd, 'task/input_mis_data.json')
+output_path = @options[:output_path] || File.join(Dir.pwd, 'task/tmp/output_mis_data.json')
 
 input_data = File.read(input_path)
 

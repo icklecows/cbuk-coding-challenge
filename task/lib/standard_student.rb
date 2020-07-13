@@ -1,6 +1,11 @@
-require 'active_support/all'
+# frozen_string_literal: true
 
+require_relative 'modules/text_processor'
+
+# Creates a standard student with all output fields and default values
 class StandardStudent
+  include TextProcessor
+
   ATTRIBUTES = %i[source_id
                   old_source_id
                   pupil_admission_number
@@ -53,12 +58,9 @@ class StandardStudent
   def initialize(**options)
     ATTRIBUTES.each do |key|
       setter = "#{key}="
-      send(setter, options[key.to_s]) if respond_to?(setter.to_sym, false)
+      send(setter, options[key]) if respond_to?(setter.to_sym, false)
     end
-    # Note: In practice, there should be a method in place of `true` to check for negative-like values in the input,
-    # e.g. 'N', '', 'No', 0.  I have not implemented that here as it did not map to a field in the input file, and it
-    # was unclear what it might mean
-    self.is_pp = options.keys.include?(:is_pp) ? true : false
+    self.is_pp = options.keys.include?(:is_pp) ? make_boolean(options[:is_pp]) : false
     set_default_values
   end
 

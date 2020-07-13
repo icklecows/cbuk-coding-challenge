@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+require 'active_support/core_ext/string/conversions'
+
+# Provides text formatting shortcuts for transformed fields
 module TextProcessor
   def make_boolean(value)
     !negative?(value)

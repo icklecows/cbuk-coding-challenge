@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 require 'minitest/autorun'
 require_relative '../../lib/standard_student'
 
+# Tests that a new standard student can be created and that default values are returned where appropriate
 class StandardStudentTest < Minitest::Test
   def test_new
     assert_equal '1091', StandardStudent.new(source_id: '1091').source_id
@@ -19,7 +22,7 @@ class StandardStudentTest < Minitest::Test
   end
 
   def test_missing_country_of_birth_returns_default
-    assert_equal 'GBR', StandardStudent.new().country_of_birth
+    assert_equal 'GBR', StandardStudent.new.country_of_birth
   end
 
   def test_is_pp_returns_boolean
