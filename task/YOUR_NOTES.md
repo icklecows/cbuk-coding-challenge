@@ -2,9 +2,29 @@ Write any notes you want to make here. For example, you might want to
 tell us how to install any dependencies and run the program you've
 written.
 
+## Usage instructions
+
+Before running the tool for the first time, you will need to install the dependencies using bundler
+
+`bundle install`
+
+To run the program:
+
+`ruby standardise_student.rb`
+
+If you do not supply any options, it will use the `input_mis_data.json` file in the task directory and output to `task/tmp/output_mis_data.json`
+
+### Options
+
+| -f /path/to/input/file | Lets you specify the input file |
+| -o /path/to/output/file | Lets you specify the input file |
+| -t | Runs test suite |
+| -h | Displays help |
+
+
 ## Data map
 
-This map shows how the Input fields will map to the output fields, with any data transformations needed.
+This map shows how the input fields map to the output fields, with any data transformations.
 
 | Input Field | Output Field | Transformation needed |
 |-------------|--------------|-----------------------|

@@ -1,3 +1,4 @@
+#! /usr/bin/ruby
 # frozen_string_literal: true
 
 require 'optparse'
@@ -6,33 +7,29 @@ require_relative 'lib/input_student'
 require_relative 'lib/standard_student'
 require_relative 'test/test'
 
-@options = {}
+# Provide default options for input and output files
+@options = { input_path:  File.join(Dir.pwd, 'task/input_mis_data.json'),
+             output_path: File.join(Dir.pwd, 'task/tmp/output_mis_data.json') }
 
+# Allow user to specify different input and output files, run tests and display help
 OptionParser.new do |opts|
-  opts.on('-fFILENAME', '--file=FILENAME', 'Specify input file path') do |path|
-    @options[:input_path] = path
-  end
+  opts.on('-fFILENAME', '--file=FILENAME', 'Specify input file path') { |path| @options[:input_path] = path }
 
-  opts.on('-oFILENAME', '--output=FILENAME', 'Specify output file path') do |path|
-    @options[:output_path] = path
-  end
+  opts.on('-oFILENAME', '--output=FILENAME', 'Specify output file path') { |path| @options[:output_path] = path }
 
   opts.on('-t', '--test', 'Run test suite') do
     Test.run_test_suite
     exit
   end
 
-  opts.on('-h', '--help', 'Prints this help') do
+  opts.on('-h', '--help', 'Print this help') do
     puts opts
     exit
   end
 end.parse!
 
-input_path = @options[:input_path] || File.join(Dir.pwd, 'task/input_mis_data.json')
-output_path = @options[:output_path] || File.join(Dir.pwd, 'task/tmp/output_mis_data.json')
+# Read data from the input file and parse the JSON.
+input_data = JSON.parse File.read(@options[:input_path])
 
-input_data = File.read(input_path)
-
-input_data = JSON.parse(input_data)
-
-File.write(output_path, JSON.pretty_generate(InputStudent.new(**input_data).as_json, indent: "\t"))
+# Write out the JSON to a file in the correct format.
+File.write(@options[:output_path], JSON.pretty_generate(InputStudent.new(**input_data).as_json, indent: "\t"))
