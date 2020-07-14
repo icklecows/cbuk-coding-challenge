@@ -10,12 +10,14 @@ Before running the tool for the first time, you will need to install the depende
 
 To run the program:
 
-`ruby standardise_student.rb`
+`ruby task/standardise_student.rb`
 
 If you do not supply any options, it will use the `input_mis_data.json` file in the task directory and output to `task/tmp/output_mis_data.json`
 
 ### Options
 
+| Option | Purpose |
+|--------|---------|
 | -f /path/to/input/file | Lets you specify the input file |
 | -o /path/to/output/file | Lets you specify the input file |
 | -t | Runs test suite |

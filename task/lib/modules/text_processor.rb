@@ -2,7 +2,7 @@
 
 require 'active_support/core_ext/string/conversions'
 
-# Provides text formatting shortcuts for transformed fields
+# Provides text formatting utilities for transforming fields
 module TextProcessor
   def make_boolean(value)
     !negative?(value)
